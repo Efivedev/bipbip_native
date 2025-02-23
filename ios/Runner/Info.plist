@@ -47,5 +47,11 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+        <string>BipBip necesita acceso a tu ubicación para encontrar conductores cercanos</string>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>BipBip necesita acceso a tu ubicación para mejorar el servicio</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>BipBip necesita acceso a tu ubicación para encontrar conductores cercanos</string>
 	</dict>
 </plist>

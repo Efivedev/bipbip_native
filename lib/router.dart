@@ -9,7 +9,7 @@ final protectedRoutes = ["home_screen"];
 
 String? checkProtectedRoutes(BuildContext context, String? path) {
   final userModel = Provider.of<UserModel>(context, listen: false);
-  final isLoggedIn = userModel.isLogged;
+  final isLoggedIn = userModel.isAuthenticated;
 
   if (!isLoggedIn && protectedRoutes.contains(path)) {
     return "/login";
@@ -28,6 +28,7 @@ GoRouter router = GoRouter(
       },
       redirect: (context, state) => checkProtectedRoutes(context, state.name),
     ),
+    GoRoute(path: "/home_screen", redirect: (context, state) => "/"),
     GoRoute(
         path: "/login",
         name: "login_screen",

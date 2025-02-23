@@ -1,32 +1,39 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
+import 'package:bipbip/main.dart';
+import 'package:flutter/foundation.dart';
+import '../models/auth_response.dart';
 
 class UserModel extends ChangeNotifier {
-  String _phoneNumber = "";
-  String _firstName = "";
-  String _lastName = "";
-  bool _isLogged = false;
+  String? _accessToken;
+  String? _refreshToken;
+  Map<String, dynamic>? _userData;
 
-  String get phoneNumber => _phoneNumber;
+  bool get isAuthenticated => _accessToken != null;
+  String? get accessToken => _accessToken;
+  String? get refreshToken => _refreshToken;
+  Map<String, dynamic>? get userData => _userData;
 
-  String get fullName => "$_firstName $_lastName";
+  void initializeFromAuth(AuthResponse? authData) {
+    if (authData != null) {
+      _accessToken = authData.access;
+      _refreshToken = authData.refresh;
+      _userData = authData.user.toJson();
+      notifyListeners();
+    }
+  }
 
-  bool get isLogged => _isLogged;
-
-  void setPhoneNumber(String phoneNumber) {
-    _phoneNumber = phoneNumber;
+  Future<void> setSession(AuthResponse authData) async {
+    _accessToken = authData.access;
+    _refreshToken = authData.refresh;
+    _userData = authData.user.toJson();
+    await sessionManager.saveSession(authData);
     notifyListeners();
   }
 
-  void setFullName([String firstName = "", String lastName = ""]) {
-    _firstName = firstName;
-    _lastName = lastName;
-    notifyListeners();
-  }
-
-  void setIsLogged(bool isLogged) {
-    _isLogged = isLogged;
+  Future<void> logout() async {
+    _accessToken = null;
+    _refreshToken = null;
+    _userData = null;
+    await sessionManager.clearSession();
     notifyListeners();
   }
 }

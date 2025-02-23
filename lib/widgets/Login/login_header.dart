@@ -7,19 +7,18 @@ class LoginHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
-      padding: const EdgeInsets.only(top: 50.0),
       child: Column(
         children: <Widget>[
           Image.asset(
-            'assets/images/logo_azul.png',
-            width: 100.0,
-            height: 100.0,
+            'assets/images/icon.png',
+            width: 120.0,
+            height: 120.0,
           ),
           const SizedBox(height: 20.0),
           const Text(
             'Ingresa tu número de teléfono',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
             ),
@@ -27,7 +26,7 @@ class LoginHeader extends StatelessWidget {
           const Text(
             'Te enviaremos un código de verificación',
             style: TextStyle(
-              color: Colors.grey,
+              color: Colors.white70,
               fontSize: 14.0,
             ),
           ),

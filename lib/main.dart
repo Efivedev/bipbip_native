@@ -3,12 +3,26 @@ import 'package:bipbip/router.dart';
 import 'package:bipbip/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'services/session_manager.dart';
 
-void main() {
-  runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => UserModel())],
-    child: const MyApp(),
-  ));
+late SessionManager sessionManager;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  sessionManager = SessionManager(prefs);
+  
+  // Get initial session data
+  final authData = sessionManager.getSession();
+  
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (_) => UserModel()..initializeFromAuth(authData)
+      ),
+    ], child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
